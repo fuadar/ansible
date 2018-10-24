@@ -5,8 +5,8 @@
     - name: Hello Message
       debug:
         msg: "Hello World!"
-     - name: Touch a file
-       file: /tmp/touch
-       state: touch
+    - name: Touch a file
+      file: /tmp/touch
+      state: touch
     - name: check state of system
-       cmd: uname -a 
+      cmd: uname -a

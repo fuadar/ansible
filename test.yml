@@ -1,0 +1,5 @@
+---
+  tasks:
+     - name: Touch a file
+       file: /tmp/touch
+       state: touch

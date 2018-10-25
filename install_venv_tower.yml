@@ -4,10 +4,10 @@
    venv_path:  "/var/lib/awx/venv"
   become_user: root
   tasks:
-   - name: Create a VirtualEnv Directory
-     file:
-      path: "{{venv_path}}/{{venv_dir}}"
-      state: directory
+  # - name: Create a VirtualEnv Directory
+  #   file:
+  #    path: "{{venv_path}}/{{venv_dir}}"
+  #    state: directory
    - name: Intialize the Virtual environments
      command: virtualenv "{{venv_path}}/{{venv_dir}}"
      args:

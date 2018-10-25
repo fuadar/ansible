@@ -2,6 +2,7 @@
 - hosts: all
   vars:
    venv_path:  "/var/lib/awx/venv"
+  become_user: root
   tasks:
    - name: Create a VirtualEnv Directory
      file:

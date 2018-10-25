@@ -1,13 +1,10 @@
----
+# This Playbook can be used in conjunction with Tower and Tower's Survey Features of by adding extra_vars
+# Needs venv_dir and ansible_re_version as 2 extra vars is using ansible-Playbook to executable
+
 - hosts: all
   vars:
    venv_path:  "/var/lib/awx/venv"
-  become_user: root
   tasks:
-  # - name: Create a VirtualEnv Directory
-  #   file:
-  #    path: "{{venv_path}}/{{venv_dir}}"
-  #    state: directory
    - name: Intialize the Virtual environments
      command: virtualenv "{{venv_path}}/{{venv_dir}}"
      args:

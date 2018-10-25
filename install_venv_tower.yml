@@ -5,7 +5,7 @@
   tasks:
    - name: Create a VirtualEnv Directory
    - file:
-      path: {{venv_path}}/{{venv_dir}}  
+      path: "{{venv_path}}/{{venv_dir}}"  
       state: directory
   - name: Intialize the Virtual environments
     command: virtualenv {{venv_path}}/{{venv_dir}}

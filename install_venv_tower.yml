@@ -4,13 +4,13 @@
    venv_path:  "/var/lib/awx/venv"
   tasks:
    - name: Create a VirtualEnv Directory
-   - file:
-      path: "{{venv_path}}/{{venv_dir}}"  
+     file:
+      path: "{{venv_path}}/{{venv_dir}}"
       state: directory
-  - name: Intialize the Virtual environments
-    command: virtualenv {{venv_path}}/{{venv_dir}}
-    creates: {{venv_path}}/{venv_dir}
-  - name: Install Tower Prereqs in the VirtualEnv
-    command:  {{venv_path}}/{{venv_dir}}/bin/pip install python-memcached psutil
-  - name: Install the Version of Ansible needed in the Virtual Environment
-    command:  {{venv_path}}/{{venv_dir}}/bin/pip install -U "ansible == {{ansible_re_version}}"
+   - name: Intialize the Virtual environments
+     command: virtualenv {{venv_path}}/{{venv_dir}}
+     creates: {{venv_path}}/{venv_dir}
+   - name: Install Tower Prereqs in the VirtualEnv
+     command:  {{venv_path}}/{{venv_dir}}/bin/pip install python-memcached psutil
+   - name: Install the Version of Ansible needed in the Virtual Environment
+     command:  {{venv_path}}/{{venv_dir}}/bin/pip install -U "ansible == {{ansible_re_version}}"

@@ -1,12 +1,15 @@
 ---
 - hosts: all
   vars:
-  venv_path:  "/var/lib/awx/venv"
+   venv_path:  "/var/lib/awx/venv"
   tasks:
    - name: Create a VirtualEnv Directory
-   - file: path= "{{venv_path}}/{{venv_dir}}"  state: directory
+   - file:
+      path: {{venv_path}}/{{venv_dir}}  
+      state: directory
   - name: Intialize the Virtual environments
-    command: virtualenv {{venv_path}}/{{venv_dir}} creates={{venv_path}}/{venv_dir}
+    command: virtualenv {{venv_path}}/{{venv_dir}}
+    creates: {{venv_path}}/{venv_dir}
   - name: Install Tower Prereqs in the VirtualEnv
     command:  {{venv_path}}/{{venv_dir}}/bin/pip install python-memcached psutil
   - name: Install the Version of Ansible needed in the Virtual Environment

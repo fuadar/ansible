@@ -4,9 +4,9 @@
   connection: ssh
   tasks:
    - name: Add group "developers" to remote server
-    # remote_user: root
-    # become: yes
-    # become_method: sudo
+    remote_user: root
+    become: yes
+    become_method: sudo
      group:
        name: "{{group_name}}"
        state: present

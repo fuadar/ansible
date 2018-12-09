@@ -8,26 +8,21 @@
     # become: yes
     # become_method: sudo
      group:
-       name: developers
-       gid: 2010
+       name: "{{group_name}}"
        state: present
    - name: Add user "farshad" to remote server
     # remote_user: ansible
     # become: yes
     # become_method: sudo
      user:
-       name: farshad
+       name: "{{user_name}}"
        comment: "Privileged User"
-       uid: 2001
-       group: developers
+       group: "{{group_name}}"
        append: yes
        shell: /bin/bash
-       generate_ssh_key: yes
-       ssh_key_bits: 2048
-       ssh_key_file: .ssh/id_rsa
        state: present
    - name: Set authorized key for user farshad copying it from current user
      authorized_key:
-       user: farshad
+       user: "{user_name}"
        state: present
        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"

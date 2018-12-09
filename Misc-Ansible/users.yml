@@ -1,0 +1,32 @@
+
+- hosts: all
+  gather_facts: no
+  connection: ssh
+  tasks:
+   - name: Add group "developers" to remote server
+    # remote_user: root
+    # become: yes
+    # become_method: sudo
+     group:
+       name: developers
+       gid: 2010
+       state: present
+   - name: Add user "farshad" to remote server
+    # remote_user: ansible
+    # become: yes
+    # become_method: sudo
+     user:
+       name: farshad
+       comment: "Privileged User"
+       uid: 2001
+       group: developers
+       append: yes
+       shell: /bin/bash
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+   - name: Set authorized key for user farshad copying it from current user
+       authorized_key:
+         user: farshad
+         state: present
+         key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"

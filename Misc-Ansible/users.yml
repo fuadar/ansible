@@ -26,4 +26,4 @@
      authorized_key:
        user: "{user_name}"
        state: present
-       key: "https://github.com/fuadar/ansible/fuad_pub.keys"
+       key: "https://github.com/fuadar/ansible/blob/master/fuad_pub.keys"

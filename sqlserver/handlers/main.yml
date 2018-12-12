@@ -1,2 +1,7 @@
----
+
 # handlers file for /Users/farshad/Documents/github1/ansible/sqlserver
+---
+- name: restart nftables
+  service:
+    name: firewalld
+    state: reloaded

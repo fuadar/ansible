@@ -1,4 +1,4 @@
----
+
 # vars file for /Users/farshad/Documents/github1/ansible/sqlserver
 ---
 ACCEPT_EULA: Y # Must be Y or N

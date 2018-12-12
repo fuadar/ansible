@@ -1,4 +1,4 @@
----
+
 # tasks file for /Users/farshad/Documents/github1/ansible/sqlserver
 ---
 - debug:
@@ -73,6 +73,6 @@
       state: stopped
 
 - name: Run mssql setup script
-  shell:  MSSQL_PID="{{edition}}" MSSQL_SA_PASSWORD="{{db_password}}" /opt/mssql/bin/mssql-conf -n setup accept-eula
+  shell:  MSSQL_PID="{{edition}}" MSSQL_SA_PASSWORD="{{admin_password}}" /opt/mssql/bin/mssql-conf -n setup accept-eula
   register: setup_output
   failed_when: "'Setup has completed successfully. SQL Server is now starting.' not in setup_output.stdout"

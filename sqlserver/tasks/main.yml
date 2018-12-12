@@ -34,7 +34,7 @@
   yum:
     name: "{{ item }}"
     state: absent
-  with_items: "{{remove_packages}}"
+  with_items: "{{cleanup_packages}}"
 
 - name: Update all packages
   yum:

@@ -1,0 +1,11 @@
+---
+# defaults file for /Users/farshad/Documents/github1/ansible/sqlserver
+sqlserver_packages:
+  - unixODBC-devel
+  - mssql-server
+  - python-pip
+  - python-devel
+
+cleanup_packages:
+  - unixODBC-utf16
+  - unixODBC-utf16-devel

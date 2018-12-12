@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - /Users/farshad/Documents/github1/ansible/sqlserver

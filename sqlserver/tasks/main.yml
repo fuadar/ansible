@@ -1,0 +1,78 @@
+---
+# tasks file for /Users/farshad/Documents/github1/ansible/sqlserver
+---
+- debug:
+    msg: "Check to see if EULA variables are accepted"
+  failed_when: (end_user_license_aggreement_consent_server != "Y" )or (end_user_license_aggreement_consent_cli != "YES")
+
+#Details on getting Microsoft GPG key are here https://docs.microsoft.com/en-us/windows-server/administration/linux-package-repository-for-microsoft-software
+
+- name: Import the MSFT gpg key
+  rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Add the MsSQL server repo
+  yum_repository:
+    name: mssql
+    description: Microsoft SQL repo
+    file: /etc/yum.repos.d/mssql.repo
+    baseurl: https://packages.microsoft.com/config/rhel/7/mssql-server-preview.repo
+    gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+    gpgcheck: yes
+
+- name: Add MsSQL command line tools repo
+  yum_repository:
+    name: mssql-cli-tools
+    description: MsSQL ommand line prod tools repo
+    file: /etc/yum.repos.d/mssql.repo
+    baseurl: https://packages.microsoft.com/rhel/7/prod/
+    gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+    gpgcheck: yes
+
+- name: Remove packages that might conflict
+  yum:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{remove_packages}}"
+
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install mssql-server packages
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{mssql_packages}}"
+
+- name: Install mssql-cli-tool via command with args
+  shell: ACCEPT_EULA=Y yum install mssql-tools -y
+  when: install_cli
+
+- name: Add mssql tools to .bashrc
+  lineinfile:
+    dest: "{{ ansible_user_dir}}/.bashrc"
+    state: present
+    line: 'export PATH="$PATH:/opt/mssql-tools/bin"'
+  when: install_cli
+
+- name: Add firewalld settings
+  firewalld:
+    zone: public
+    port: 1433/tcp
+    permanent: true
+    state: enabled
+  when: enable_iptables
+  notify: restart iptables
+
+- name: Stop any existing mssql-server
+  service:
+      name: mssql-server
+      state: stopped
+
+- name: Run mssql setup script
+  shell:  MSSQL_PID="{{edition}}" MSSQL_SA_PASSWORD="{{db_password}}" /opt/mssql/bin/mssql-conf -n setup accept-eula
+  register: setup_output
+  failed_when: "'Setup has completed successfully. SQL Server is now starting.' not in setup_output.stdout"

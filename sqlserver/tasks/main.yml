@@ -32,9 +32,9 @@
 
 - name: Remove packages that might conflict
   yum:
-    name: "{{ item }}"
+    name: u'{{cleanup_packages}}'`
     state: absent
-  with_items: "{{cleanup_packages}}"
+
 
 - name: Update all packages
   yum:

@@ -3,7 +3,7 @@
 ---
 - debug:
     msg: "Check to see if EULA variables are accepted"
-  failed_when: (end_user_license_aggreement_consent_server != "Y" )or (end_user_license_aggreement_consent_cli != "YES")
+  failed_when: (ACCEPT_EULA != "Y" )or (ACCEPT_CLI_EULA != "YES")
 
 #Details on getting Microsoft GPG key are here https://docs.microsoft.com/en-us/windows-server/administration/linux-package-repository-for-microsoft-software
 
